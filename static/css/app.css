@@ -1,25 +1,84 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
 html, body {
 	height: 100%;
 }
 
 body {
-	background-image: url(../img/dark-paths.png);	display: flex;
+	background-image: url(../img/dark-paths.png);
 	display: flex;
+}
+
+ul li {
+	font-size: 16px;
+}
+
+li a.goal {
+	color: hsl(0, 0%, 25%);
+}
+
+li a.goal:hover {
+	color: hsl(0, 0%, 35%);
+}
+
+.home-link:hover {
+	color: hsl(0, 0%, 50%) !important;
+	text-decoration: underline solid hsl(0, 0%, 50%) !important;
 }
 
 .form-inline .form-control {
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
 
 }
 
 .form-inline .btn {
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
 }
 
 .form-inline .form-control:focus {
 	box-shadow: none !important;
 	outline: none !important;
-	border: 1px solid gray;
+	border: 1px solid hsl(210, 7%, 45%);
+}
+
+.bt {
+	color: hsl(0, 0%, 40%);
+	text-decoration: none;
+}
+
+.bt1 {
+	margin-right: -5px;
+}
+
+.bt1:hover {
+	background-color: hsl(110, 30%, 70%);
+	color: white;
+	text-decoration: none;
+}
+
+.bt2:hover {
+	background-color: hsl(0, 30%, 70%);
+	color: white;
+	text-decoration: none;
+	margin: 0px;
+}
+
+.bt1:active {
+	background-color: hsl(110, 20%, 50%);
+	color: white;
+}
+
+.bt2:active {
+	background-color: hsl(0, 20%, 50%);
+	color: white;
 }
