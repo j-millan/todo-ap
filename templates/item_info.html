@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+	{{ item.get_truncated_goal }}
+{% endblock title %}
+
+{% block content %}
+	<div class="col-log-4 col-md-6 col-sm-6 my-auto">
+		<div class="card">
+			<h4 class="card-header">Item info</h4>
+			<div class="card-body pb-3">
+				<div class="row">
+					<p class="col-8 d-inline mb-1">{{ item.goal }}</p>
+					{% if item.completed %}
+						<small class="text-muted col-4 text-right">completed</small>
+					{% else %}
+						<div class="col-4 d-inline no-gutters pl-5 pr-0">
+							<a href="#" title="Mark as complete" class="col-2 py-1 px-3 bt bt1">✓</a>
+							<a href="#" title="Delete item" class="col-2 py-1 px-3 bt mr-0 bt2">✕</a>
+						</div>
+					{% endif %}
+				</div>
+				<hr class="my-1">
+				<div class="row text-muted justify-content-around mt-2">
+					<small class="col-5 text-left pl-0">Added: {{ item.added_at|date:"M j, Y, H:i" }}</small>
+					<small class="col-5 text-right pr-0">Completed:
+						{% if item.completed %}
+							{{ item.completed_at|date:"M j, Y, H:i" }}
+						{% else %}
+							Not completed yet.
+						{% endif %}
+					</small>
+				</div>
+			</div>
+		</div>
+		<a href="{% url 'home' %}" class="d-block text-muted text-center mt-1 home-link">Back to list</a>
+	</div>
+{% endblock content %}

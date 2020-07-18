@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .models import TodoItem
@@ -18,7 +18,14 @@ def home(request):
 		form = TodoItemForm()
 	
 	return render(request, 'home.html', {'items': items, 'form': form})
-	#return render(request, 'home.html')
+
+@login_required
+def item_info(request, pk):
+	item = get_object_or_404(TodoItem, pk=pk)
+	if item.user == request.user:
+		return render(request, 'item_info.html', {'item': item})
+	
+	return redirect('home')
 
 def signup(request):
 	if request.method == "POST":

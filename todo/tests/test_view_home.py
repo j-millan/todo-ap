@@ -62,7 +62,7 @@ class SuccessfulItemCreationTests(HomeViewTestCase):
 		self.assertTrue(TodoItem.objects.exists())
 
 	def test_item_display(self):
-		self.assertContains(self.response, f'<li>{TodoItem.objects.first().goal}')
+		self.assertContains(self.response, TodoItem.objects.first().get_truncated_goal())
 
 class InvalidItemCreationTests(HomeViewTestCase):
 	def setUp(self):
