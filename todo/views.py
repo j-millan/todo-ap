@@ -7,7 +7,6 @@ from .forms import TodoItemForm, SignUpForm
 @login_required
 def home(request):
 	items = TodoItem.objects.filter(user=request.user).order_by('-added_at')
-
 	if request.method == "POST":
 		form = TodoItemForm(request.POST)
 		if form.is_valid():
@@ -25,6 +24,30 @@ def item_info(request, pk):
 	if item.user == request.user:
 		return render(request, 'item_info.html', {'item': item})
 	
+	return redirect('home')
+
+@login_required
+def item_action_confirm(request, pk, action):
+	item = get_object_or_404(TodoItem, pk=pk)
+	if item.user == request.user:
+		if action == 0:
+			return render(request, 'actions/complete.html', {'item': item})
+		elif action == 1:
+			return render(request, 'actions/delete.html', {'item': item})
+
+	return redirect('home')
+
+@login_required
+def item_action_done(request, pk, action):
+	item = get_object_or_404(TodoItem, pk=pk)
+	if item.user == request.user:
+		if action == 0:
+			item.completed = True
+			item.save()
+			return redirect('info', pk=item.pk)
+		elif action == 1:
+			item.delete()
+
 	return redirect('home')
 
 def signup(request):

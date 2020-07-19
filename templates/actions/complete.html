@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Complete task 
+{% endblock title %}
+
+{% block content %}
+	<div class="col-lg-4 col-md-6 col-sm-8 my-auto">
+		<div class="card">
+			<h3 class="card-header">Mark as complete</h3>
+			<div class="card-body">
+				<p class="text-center">Have you completed this task?</p>
+				<div class="row no-gutters justify-content-center">
+					<a href="{% url 'action_done' item.pk 0 %}" class="col-5 px-3 bt">YES</a>
+					<a href="{% url 'home' %}" class="col-5 px-3 bt">CANCEL</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock content %}

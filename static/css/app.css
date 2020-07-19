@@ -53,32 +53,44 @@ li a.goal:hover {
 
 .bt {
 	color: hsl(0, 0%, 40%);
+	text-align: center;
+	background-color: hsl(0, 0%, 95%);
 	text-decoration: none;
 }
 
-.bt1 {
+.bt:hover {
+	background-color: hsl(0, 0%, 90%);
+	color: gray;
+	text-decoration: none;
+}
+
+#bt1, #bt2 {	
+	background: none;
+}
+
+#bt1 {
 	margin-right: -5px;
 }
 
-.bt1:hover {
+#bt1:hover {
 	background-color: hsl(110, 30%, 70%);
 	color: white;
 	text-decoration: none;
 }
 
-.bt2:hover {
+#bt2:hover {
 	background-color: hsl(0, 30%, 70%);
 	color: white;
 	text-decoration: none;
 	margin: 0px;
 }
 
-.bt1:active {
+#bt1:active {
 	background-color: hsl(110, 20%, 50%);
 	color: white;
 }
 
-.bt2:active {
+#bt2:active {
 	background-color: hsl(0, 20%, 50%);
 	color: white;
 }

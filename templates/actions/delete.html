@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Delete task 
+{% endblock title %}
+
+{% block content %}
+	<div class="col-lg-4 col-md-6 col-sm-8 my-auto">
+		<div class="card">
+			<h3 class="card-header">Delete task</h3>
+			<div class="card-body">
+				<p class="text-center">Are you sure you want to delete this task?</p>
+				<div class="row justify-content-center">
+					<a href="{% url 'action_done' item.pk 1 %}" class="col-5 px-3 py-0 bt">YES</a>
+					<a href="{% url 'home' %}" class="col-5 px-3 py-0 bt">CANCEL</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock content %}

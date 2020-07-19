@@ -30,7 +30,7 @@ class ItemInfoViewTests(ItemInfoViewTestCase):
 		self.assertEquals(self.response.status_code, 200)
 
 	def test_view_function(self):
-		view = resolve('/info/1/')
+		view = resolve('/item/1/')
 		self.assertEquals(view.func, item_info)
 
 	def test_contains_home_link(self):
