@@ -3,14 +3,13 @@ from django.contrib.auth.models import User
 from django.urls import reverse, resolve
 from ..models import TodoItem
 from ..views import item_info
+from .cases import BaseTestCase
 
-class ItemInfoViewTestCase(TestCase):
+class ItemInfoViewTestCase(BaseTestCase):
 	def setUp(self):
-		user = User.objects.create_user(username='user', email='email@email.com', password='pasguord')
-		self.username = 'user'
-		self.password = 'pasguord'
-		TodoItem.objects.create(goal='Finish this app', user=user)
-		self.url = reverse('info', kwargs={'pk': 1})
+		url = reverse('info', kwargs={'pk': 1})
+		super().setUp(url)
+		TodoItem.objects.create(goal='Finish this app', user=self.user)
 
 class LoginRequiredItemInfoViewTests(ItemInfoViewTestCase):
 	def setUp(self):

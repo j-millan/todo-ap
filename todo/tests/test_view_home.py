@@ -5,26 +5,20 @@ from django.urls import reverse, resolve
 from ..forms import TodoItemForm
 from ..models import TodoItem
 from ..views import home
+from .cases import BaseTestCase
 
-class HomeViewTestCase(TestCase):
+class HomeViewLoginRequiredTests(BaseTestCase):
 	def setUp(self):
-		self.user = User.objects.create_user(username='user', email='email@email.com', password="password")
-		self.username = 'user'
-		self.password = 'password'
-		self.url = reverse('home')
-
-class HomeViewLoginRequiredTests(HomeViewTestCase):
-	def setUp(self):
-		super().setUp()
+		super().setUp(reverse('home'))
 		self.response = self.client.get(self.url)
 
 	def test_redirection(self):
 		login_url = reverse('login')
 		self.assertRedirects(self.response, f'{login_url}?next={self.url}')
 
-class HomeViewTests(HomeViewTestCase):
+class HomeViewTests(BaseTestCase):
 	def setUp(self):
-		super().setUp()
+		super().setUp(reverse('home'))
 		self.client.login(username=self.username, password=self.password)
 		self.response = self.client.get(self.url)
 
@@ -46,9 +40,9 @@ class HomeViewTests(HomeViewTestCase):
 		self.assertContains(self.response, '<input', 2)
 		self.assertContains(self.response, 'type="text"', 1)
 
-class SuccessfulItemCreationTests(HomeViewTestCase):
+class SuccessfulItemCreationTests(BaseTestCase):
 	def setUp(self):
-		super().setUp()
+		super().setUp(reverse('home'))
 		self.client.login(username=self.username, password=self.password)
 		data = {
 			'goal': 'Finish my homework'
@@ -64,9 +58,9 @@ class SuccessfulItemCreationTests(HomeViewTestCase):
 	def test_item_display(self):
 		self.assertContains(self.response, TodoItem.objects.first().get_truncated_goal())
 
-class InvalidItemCreationTests(HomeViewTestCase):
+class InvalidItemCreationTests(BaseTestCase):
 	def setUp(self):
-		super().setUp()
+		super().setUp(reverse('home'))
 		self.client.login(username=self.username, password=self.password)
 		self.response = self.client.post(self.url, {})
 
