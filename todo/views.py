@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .models import TodoItem
@@ -45,7 +46,8 @@ def item_action_confirm(request, pk, action):
 @login_required
 def item_action_done(request, pk, action):
 	item = get_object_or_404(TodoItem, pk=pk)
-	if item.user == request.user and not item.completed:
+	referer = str(request.META.get('HTTP_REFERER')).find(reverse('action_confirm', kwargs={'pk': pk, 'action': action}))
+	if item.user == request.user and referer > 0 and not item.completed:
 		if action == 0:
 			item.completed = True
 			item.save()
