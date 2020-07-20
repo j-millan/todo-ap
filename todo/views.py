@@ -6,7 +6,7 @@ from .forms import TodoItemForm, SignUpForm
 
 @login_required
 def home(request):
-	items = TodoItem.objects.filter(user=request.user).order_by('-added_at')
+	items = TodoItem.objects.filter(user=request.user).filter(completed=False).order_by('-added_at')
 	if request.method == "POST":
 		form = TodoItemForm(request.POST)
 		if form.is_valid():
@@ -17,6 +17,11 @@ def home(request):
 		form = TodoItemForm()
 	
 	return render(request, 'home.html', {'items': items, 'form': form})
+
+@login_required
+def completed(request):
+	items = TodoItem.objects.filter(user=request.user).filter(completed=True).order_by('-completed_at')
+	return render(request, 'completed_tasks.html', {'items': items})
 
 @login_required
 def item_info(request, pk):
@@ -30,7 +35,7 @@ def item_info(request, pk):
 def item_action_confirm(request, pk, action):
 	item = get_object_or_404(TodoItem, pk=pk)
 	if item.user == request.user:
-		if action == 0:
+		if action == 0 and not item.completed:
 			return render(request, 'actions/complete.html', {'item': item})
 		elif action == 1:
 			return render(request, 'actions/delete.html', {'item': item})
@@ -40,7 +45,7 @@ def item_action_confirm(request, pk, action):
 @login_required
 def item_action_done(request, pk, action):
 	item = get_object_or_404(TodoItem, pk=pk)
-	if item.user == request.user:
+	if item.user == request.user and not item.completed:
 		if action == 0:
 			item.completed = True
 			item.save()

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static widget_tweaks form_tags %}
+
+{% block title %}
+	Completed tasks
+{% endblock title %}
+
+{% block content %}
+	<div class="col-log-4 col-md-6 col-sm-6 my-auto">
+		<div class="card">
+			<h3 class="card-header">Completed tasks</h3>
+			<div class="card-body pt-3">
+				<ul class="list-group list-group-flush">
+					{% if items %}
+						{% include "includes/items_list.html" %}
+					{% else %}
+						No tasks completd yet.
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+		<a href="{% url 'home' %}" class="d-block text-muted text-center mt-1 footer-link">Back to home page</a>
+	</div>
+{% endblock content %}

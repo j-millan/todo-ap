@@ -25,7 +25,7 @@ li a.goal:hover {
 	color: hsl(0, 0%, 35%);
 }
 
-.home-link:hover {
+.footer-link:hover {
 	color: hsl(0, 0%, 50%) !important;
 	text-decoration: underline solid hsl(0, 0%, 50%) !important;
 }
