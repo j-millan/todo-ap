@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse, resolve
-from ..views import signup
+from ..views import SignUpView
 
 class SignUpViewTests(TestCase):
 	def setUp(self):
@@ -14,7 +14,7 @@ class SignUpViewTests(TestCase):
 
 	def test_view_function(self):
 		view = resolve('/signup/')
-		self.assertEquals(view.func, signup)
+		self.assertEquals(view.func.view_class, SignUpView)
 
 	def test_contains_login_link(self):
 		login_url = reverse('login')

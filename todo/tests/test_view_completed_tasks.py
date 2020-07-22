@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from ..models import TodoItem
-from ..views import completed
+from ..views import CompletedTasksView
 from .cases import BaseTestCase
 
 class CompletedTasksViewLoginRequiredTests(BaseTestCase):
@@ -17,7 +17,7 @@ class CompletedTasksViewTests(BaseTestCase):
 	def setUp(self):
 		super().setUp(reverse('completed'))
 		self.client.login(username=self.username, password=self.password)
-		self.item = TodoItem.objects.create(goal='Finish this app', user=self.user)
+		self.item = TodoItem.objects.create(task='Finish this app', user=self.user)
 		self.item.completed = True
 		self.item.save()
 		self.response = self.client.get(self.url)
@@ -27,13 +27,13 @@ class CompletedTasksViewTests(BaseTestCase):
 
 	def test_view_function(self):
 		view = resolve('/completed/')
-		self.assertEquals(view.func, completed)
+		self.assertEquals(view.func.view_class, CompletedTasksView)
 
 	def test_shows_completed_task(self):
-		self.assertContains(self.response, self.item.get_truncated_goal())
+		self.assertContains(self.response, self.item.get_truncated_task())
 
 	def test_doesnt_show_uncompleted_task(self):
 		self.item.completed = False
 		self.item.save()
 		response = self.client.get(self.url)
-		self.assertContains(response, self.item.get_truncated_goal(), 0)
+		self.assertContains(response, self.item.get_truncated_task(), 0)

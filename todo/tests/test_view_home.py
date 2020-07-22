@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView
 from django.urls import reverse, resolve
 from ..forms import TodoItemForm
 from ..models import TodoItem
-from ..views import home
+from ..views import HomeView
 from .cases import BaseTestCase
 
 class HomeViewLoginRequiredTests(BaseTestCase):
@@ -27,7 +27,7 @@ class HomeViewTests(BaseTestCase):
 
 	def test_view_function(self):
 		view = resolve('/')
-		self.assertEquals(view.func, home)
+		self.assertEquals(view.func.view_class, HomeView)
 
 	def test_csrf(self):
 		self.assertContains(self.response, 'csrfmiddlewaretoken')
@@ -45,7 +45,7 @@ class SuccessfulItemCreationTests(BaseTestCase):
 		super().setUp(reverse('home'))
 		self.client.login(username=self.username, password=self.password)
 		data = {
-			'goal': 'Finish my homework'
+			'task': 'Finish my homework'
 		}
 		self.response = self.client.post(self.url, data)
 
@@ -56,7 +56,7 @@ class SuccessfulItemCreationTests(BaseTestCase):
 		self.assertTrue(TodoItem.objects.exists())
 
 	def test_item_display(self):
-		self.assertContains(self.response, TodoItem.objects.first().get_truncated_goal())
+		self.assertContains(self.response, TodoItem.objects.first().get_truncated_task())
 
 class InvalidItemCreationTests(BaseTestCase):
 	def setUp(self):

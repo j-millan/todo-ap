@@ -21,9 +21,9 @@ from todo import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('completed/', views.completed, name='completed'),
-    path('signup/', views.signup, name='signup'),
+    path('', views.HomeView.as_view(), name='home'),
+    path('completed/', views.CompletedTasksView.as_view(), name='completed'),
+    path('signup/', views.SignUpView.as_view(), name='signup'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('item/<int:pk>/', views.item_info, name='info'),

@@ -1,28 +1,48 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
+from django.views.generic import ListView, CreateView, DetailView
 from .models import TodoItem
 from .forms import TodoItemForm, SignUpForm
 
-@login_required
-def home(request):
-	items = TodoItem.objects.filter(user=request.user).filter(completed=False).order_by('-added_at')
-	if request.method == "POST":
-		form = TodoItemForm(request.POST)
-		if form.is_valid():
-			item = form.save(commit=False)
-			item.user = request.user
-			item.save()
-	else:
-		form = TodoItemForm()
-	
-	return render(request, 'home.html', {'items': items, 'form': form})
+@method_decorator(login_required, name='dispatch')
+class CompletedTasksView(ListView):
+	model = TodoItem
+	context_object_name = "items"
+	template_name = "completed_tasks.html"
 
-@login_required
-def completed(request):
-	items = TodoItem.objects.filter(user=request.user).filter(completed=True).order_by('-completed_at')
-	return render(request, 'completed_tasks.html', {'items': items})
+	def get_queryset(self):
+		queryset = super().get_queryset()
+		return queryset.filter(user=self.request.user).filter(completed=True).order_by('-completed_at')
+
+@method_decorator(login_required, name='dispatch')
+class HomeView(CreateView):
+	model = TodoItem
+	form_class = TodoItemForm
+	template_name = "home.html"
+
+	def form_valid(self, form):
+		item = form.save(commit=False)
+		item.user = self.request.user
+		item.save()
+		return self.render_to_response(self.get_context_data())
+
+	def get_context_data(self, **kwargs):
+		context = super(CreateView, self).get_context_data()
+		context['items'] = TodoItem.objects.filter(user=self.request.user).filter(completed=False).order_by('-added_at')
+		return context
+class SignUpView(CreateView):
+	model = User
+	form_class = SignUpForm
+	template_name = "signup.html"
+
+	def form_valid(self, form):
+		user = form.save()
+		login(self.request, user)
+		return redirect('home')
 
 @login_required
 def item_info(request, pk):
@@ -56,16 +76,3 @@ def item_action_done(request, pk, action):
 			item.delete()
 
 	return redirect('home')
-
-def signup(request):
-	if request.method == "POST":
-		form = SignUpForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			login(request, user)
-			return redirect('home')
-
-	else:
-		form = SignUpForm()
-
-	return render(request, 'signup.html', {'form': form})
