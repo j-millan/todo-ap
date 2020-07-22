@@ -7,7 +7,7 @@ from ..views import item_action_done
 class ActionDoneViewTestCase(TestCase):
 	def setUp(self, url, confirm_url):
 		user = User.objects.create_user(username='user', email='email@email.com', password="password")
-		self.item = TodoItem.objects.create(goal='finish this app', user=user)
+		self.item = TodoItem.objects.create(task='finish this app', user=user)
 		self.client.login(username='user', password='password')
 		self.client.get(confirm_url)
 		self.response = self.client.get(url)

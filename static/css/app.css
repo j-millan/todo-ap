@@ -17,11 +17,11 @@ ul li {
 	font-size: 16px;
 }
 
-li a.goal {
+li a.task {
 	color: hsl(0, 0%, 25%);
 }
 
-li a.goal:hover {
+li a.task:hover {
 	color: hsl(0, 0%, 35%);
 }
 

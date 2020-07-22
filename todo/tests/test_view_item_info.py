@@ -9,7 +9,7 @@ class ItemInfoViewTestCase(BaseTestCase):
 	def setUp(self):
 		url = reverse('info', kwargs={'pk': 1})
 		super().setUp(url)
-		TodoItem.objects.create(goal='Finish this app', user=self.user)
+		TodoItem.objects.create(task='Finish this app', user=self.user)
 
 class LoginRequiredItemInfoViewTests(ItemInfoViewTestCase):
 	def setUp(self):

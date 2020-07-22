@@ -1,7 +1,7 @@
 {% for item in items %}
 	<li class="list-group-item row d-flex justify-content-around">
 		<div class="col-8 d-inline">
-			<a href="{% url 'info' item.pk %}" class="goal text-decoration-none" title="{{ item.goal }}">{{ item.get_truncated_goal }}</a>
+			<a href="{% url 'info' item.pk %}" class="task text-decoration-none" title="{{ item.task }}">{{ item.get_truncated_task }}</a>
 			<small class="text-muted pl-1">{{ item.added_at|date:"M n, H:i" }}</small>
 		</div>
 		{% if item.completed %}

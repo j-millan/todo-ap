@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-	{{ item.get_truncated_goal }}
+	{{ item.get_truncated_task }}
 {% endblock title %}
 
 {% block content %}
@@ -10,7 +10,7 @@
 			<h4 class="card-header">Item info</h4>
 			<div class="card-body pb-3">
 				<div class="row">
-					<p class="col-8 d-inline mb-1">{{ item.goal }}</p>
+					<p class="col-8 d-inline mb-1">{{ item.task }}</p>
 					{% if item.completed %}
 						<small class="text-muted col-4 text-right">completed</small>
 					{% else %}

@@ -6,7 +6,7 @@ from .models import TodoItem
 class TodoItemForm(forms.ModelForm):
 	class Meta:
 		model = TodoItem
-		fields = ['goal', ]
+		fields = ['task', ]
 
 class SignUpForm(UserCreationForm):
 	email = forms.CharField(required=True, max_length=150, widget=forms.EmailInput())

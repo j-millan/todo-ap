@@ -8,12 +8,15 @@
 {% block content %}
 	<div class="col-log-4 col-md-6 col-sm-6 my-auto">
 		<div class="card">
-			<h3 class="card-header">TODO list</h3>
+			<div class="card-header row justify-content-around">
+				<h3 class="col-6 text-left">TODO list</h3>
+				<a href="{% url 'completed' %}" class="col-6 text-muted text-right">See completed tasks</a>	
+			</div>
 			<div class="card-body pt-3">
 				<form method="post" class="form-inline row px-3" novalidate>
 					{% csrf_token %}
-					<label class="sr-only" for="input">{{ form.goal.label_tag }}</label>
-					<input type="text" class="form-control col-10" id="input" name="goal" placeholder="Finish my homework..." required>
+					<label class="sr-only" for="input">{{ form.task.label_tag }}</label>
+					<input type="text" class="form-control col-10" id="input" name="task" placeholder="Finish my homework..." required>
 					<button type="submit" class="btn btn-secondary col-2">ADD</button>
 				</form>
 				<hr>
@@ -26,6 +29,6 @@
 				</ul>
 			</div>
 		</div>
-		<a href="{% url 'completed' %}" class="d-block text-muted text-center mt-1 footer-link">See completed tasks</a>
+		<a href="{% url 'logout' %}" class="d-block text-muted text-center mt-1 footer-link">Logout</a>
 	</div>
 {% endblock content %}

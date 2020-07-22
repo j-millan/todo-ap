@@ -8,7 +8,7 @@ class ActionConfirmViewTests(BaseTestCase):
 		url = reverse('action_confirm', kwargs={'pk': 1, 'action': 0})
 		super().setUp(url)
 		
-		TodoItem.objects.create(goal='finish this app', user=self.user)
+		TodoItem.objects.create(task='finish this app', user=self.user)
 
 		self.client.login(username=self.username, password=self.password)
 		self.response = self.client.get(url)
