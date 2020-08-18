@@ -34,6 +34,7 @@ class HomeView(CreateView):
 		context = super(CreateView, self).get_context_data()
 		context['items'] = TodoItem.objects.filter(user=self.request.user).filter(completed=False).order_by('-added_at')
 		return context
+		
 class SignUpView(CreateView):
 	model = User
 	form_class = SignUpForm
