@@ -74,4 +74,4 @@ A simple web app created with django to store and track your tasks. You can easi
 
 Now you can run the server using `python manage.py runserver`.
 
-Go to [127.0.0.1:8000/](127.0.0.1:8000/) and start using the app!
+Go to [127.0.0.1:8000/](http://127.0.0.1:8000/) and start using the app!
